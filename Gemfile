@@ -20,4 +20,5 @@ group :test, :development do
   gem 'factory_bot_rails'
   gem 'rspec'
   gem 'rspec-rails'
+  gem 'test-prof'
 end
