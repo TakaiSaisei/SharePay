@@ -3,6 +3,7 @@
 # Table name: payments
 #
 #  id          :bigint           not null, primary key
+#  amount      :float
 #  currency    :string           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -17,6 +18,7 @@
 FactoryBot.define do
   factory :payment do
     currency { 'RUB' }
+    sequence(:amount) { |n| 1000 + n }
     association :receiver, factory: :user
     association :sender, factory: :user
   end

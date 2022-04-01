@@ -3,6 +3,7 @@
 # Table name: payments
 #
 #  id          :bigint           not null, primary key
+#  amount      :float
 #  currency    :string           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
