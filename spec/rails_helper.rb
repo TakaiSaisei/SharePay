@@ -5,6 +5,7 @@ require_relative '../config/environment'
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
+require 'test_prof/recipes/rspec/let_it_be'
 require_relative 'support/factory_bot'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
