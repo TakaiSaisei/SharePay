@@ -15,3 +15,9 @@ gem "puma", "~> 5.0"
 group :development do
   gem 'annotate'
 end
+
+group :test, :development do
+  gem 'factory_bot_rails'
+  gem 'rspec'
+  gem 'rspec-rails'
+end
