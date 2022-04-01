@@ -9,5 +9,9 @@
 #  updated_at :datetime         not null
 #
 class User < ApplicationRecord
+  def owes(user)
+    Payment.where(sender: self, receiver: user).sum(:amount) -
+      UserPurchase.includes(:purchase).where('user_purchases.user': self, 'purchases.user': user).sum(:amount)
+  end
 
 end

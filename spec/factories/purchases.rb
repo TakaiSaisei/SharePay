@@ -16,13 +16,18 @@
 #
 FactoryBot.define do
   factory :purchase do
+    transient do
+      items_amount { 100 }
+      items_user { create(:user) }
+    end
+
     sequence(:name) { |n| "name_#{n}" }
     association :user
   end
 
   trait :with_items do
-    after(:create) do |purchase, _evaluator|
-      create(:user_purchase, purchase:)
+    after(:create) do |purchase, evaluator|
+      create(:user_purchase, purchase:, user: evaluator.items_user, amount: evaluator.items_amount)
     end
   end
 end
