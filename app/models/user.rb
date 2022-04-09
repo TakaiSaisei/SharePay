@@ -9,8 +9,17 @@
 #  updated_at :datetime         not null
 #
 class User < ApplicationRecord
+  validates :name, presence: true
+  validates :phone, presence: true, uniqueness: true
+
   def owes(user)
     Payment.where(sender: self, receiver: user).sum(:amount) -
       UserPurchase.includes(:purchase).where('user_purchases.user': self, 'purchases.user': user).sum(:amount)
+  end
+
+  private
+
+  def to_param
+    phone
   end
 end

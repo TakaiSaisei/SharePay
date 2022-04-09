@@ -10,7 +10,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe User do
+RSpec.describe User, type: :model do
   let_it_be(:user) { create :user }
 
   it 'has a valid factory' do
