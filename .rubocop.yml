@@ -1,0 +1,15 @@
+AllCops:
+  Exclude:
+    - 'db/schema.rb'
+    - 'bin/*'
+    - 'lib/tasks/auto_annotate_models.rake'
+  NewCops: enable
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Metrics/BlockLength:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Style/BlockComments:
+  Enabled: false
