@@ -19,3 +19,5 @@ Metrics/AbcSize:
   Enabled: false
 Style/ClassAndModuleChildren:
   Enabled: false
+Layout/LineLength:
+  Enabled: false
