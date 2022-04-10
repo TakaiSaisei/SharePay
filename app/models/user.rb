@@ -16,10 +16,4 @@ class User < ApplicationRecord
     Payment.where(sender: self, receiver: user).sum(:amount) -
       UserPurchase.includes(:purchase).where('user_purchases.user': self, 'purchases.user': user).sum(:amount)
   end
-
-  private
-
-  def to_param
-    phone
-  end
 end

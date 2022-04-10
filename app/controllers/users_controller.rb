@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     render json: @users, status: :ok
   end
 
-  # GET /users/{phone}
+  # GET /users/{id}
   def show
     render json: @user, status: :ok
   end
@@ -22,7 +22,7 @@ class UsersController < ApplicationController
     end
   end
 
-  # PUT /users/{phone}
+  # PUT /users/{id}
   def update
     if @user.update(user_params)
       render status: :no_content
@@ -31,7 +31,7 @@ class UsersController < ApplicationController
     end
   end
 
-  # DELETE /users/{phone}
+  # DELETE /users/{id}
   def destroy
     if @user.destroy
       render status: :no_content
@@ -43,7 +43,7 @@ class UsersController < ApplicationController
   private
 
   def set_user
-    @user = User.find_by!(phone: params[:id])
+    @user = User.find(params[:id])
   rescue ActiveRecord::RecordNotFound
     render json: { errors: 'User not found' }, status: :not_found
   end

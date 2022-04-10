@@ -25,7 +25,7 @@ RSpec.describe UsersController, type: :controller do
       let_it_be(:user) { create(:user) }
 
       it 'returns user' do
-        get :show, params: { id: user.phone }
+        get :show, params: { id: user.id }
         expect(response).to have_http_status :ok
         expect(response.body).to eq user.to_json
       end
@@ -72,7 +72,7 @@ RSpec.describe UsersController, type: :controller do
 
       it 'updates user' do
         expect do
-          put :update, params: { id: user.phone, user: user_attributes }
+          put :update, params: { id: user.id, user: user_attributes }
           user.reload
         end.to change { user.phone }.to user_attributes[:phone]
 
@@ -83,7 +83,7 @@ RSpec.describe UsersController, type: :controller do
     context 'with unprocessable params' do
       it 'returns 422' do
         expect do
-          put :update, params: { id: user.phone, user: { name: nil } }
+          put :update, params: { id: user.id, user: { name: nil } }
           user.reload
         end.not_to change { user.name }
 
@@ -97,7 +97,7 @@ RSpec.describe UsersController, type: :controller do
 
     it 'destroys user' do
       expect do
-        delete :destroy, params: { id: user.phone }
+        delete :destroy, params: { id: user.id }
       end.to change { User.count }.by(-1)
 
       expect(response).to have_http_status :no_content
