@@ -13,3 +13,9 @@ Style/Documentation:
   Enabled: false
 Style/BlockComments:
   Enabled: false
+Lint/AmbiguousBlockAssociation:
+  IgnoredMethods: [change]
+Metrics/AbcSize:
+  Enabled: false
+Style/ClassAndModuleChildren:
+  Enabled: false

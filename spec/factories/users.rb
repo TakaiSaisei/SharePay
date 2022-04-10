@@ -11,6 +11,6 @@
 FactoryBot.define do
   factory :user do
     sequence(:name) { |n| "name_#{n}" }
-    sequence(:phone) { |n| n.to_s }
+    sequence(:phone, &:to_s)
   end
 end

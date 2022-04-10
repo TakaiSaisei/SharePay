@@ -98,7 +98,7 @@ RSpec.describe PurchasesController, type: :controller do
     it 'destroys purchase' do
       expect do
         delete :destroy, params: { id: purchase }
-      end.to change { Purchase.count }.by -1
+      end.to change { Purchase.count }.by(-1)
 
       expect(response).to have_http_status :no_content
     end

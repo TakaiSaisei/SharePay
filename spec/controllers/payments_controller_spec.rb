@@ -98,7 +98,7 @@ RSpec.describe PaymentsController, type: :controller do
     it 'destroys payment' do
       expect do
         delete :destroy, params: { id: payment }
-      end.to change { Payment.count }.by -1
+      end.to change { Payment.count }.by(-1)
 
       expect(response).to have_http_status :no_content
     end

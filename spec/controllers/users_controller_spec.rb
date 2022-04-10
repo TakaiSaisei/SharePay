@@ -98,7 +98,7 @@ RSpec.describe UsersController, type: :controller do
     it 'destroys user' do
       expect do
         delete :destroy, params: { id: user.phone }
-      end.to change { User.count }.by -1
+      end.to change { User.count }.by(-1)
 
       expect(response).to have_http_status :no_content
     end
