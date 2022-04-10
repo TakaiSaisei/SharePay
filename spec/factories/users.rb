@@ -10,7 +10,7 @@
 #
 FactoryBot.define do
   factory :user do
-    sequence(:name) { |n| "name_#{n}" }
+    sequence(:name) { |n| "First Second #{n}" }
     sequence(:phone, &:to_s)
   end
 end

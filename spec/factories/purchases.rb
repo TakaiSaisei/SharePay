@@ -21,7 +21,7 @@ FactoryBot.define do
       items_user { create(:user) }
     end
 
-    sequence(:name) { |n| "name_#{n}" }
+    sequence(:name) { |n| "Purchase #{n}" }
     association :user
   end
 
