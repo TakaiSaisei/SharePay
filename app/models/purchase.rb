@@ -21,4 +21,6 @@ class Purchase < ApplicationRecord
 
   validates :name, presence: true
   validates :user_id, presence: true
+
+  accepts_nested_attributes_for :user_purchases
 end

@@ -49,6 +49,7 @@ class PurchasesController < ApplicationController
   end
 
   def purchase_params
-    params.require(:purchase).permit(:description, :emoji, :name, :user_id)
+    params.require(:purchase).permit(:description, :emoji, :name, :user_id,
+                                     user_purchases_attributes: %i[id user_id amount])
   end
 end

@@ -9,7 +9,7 @@
 #  updated_at :datetime         not null
 #
 FactoryBot.define do
-  factory :user do
+  factory :user, aliases: %i[receiver sender] do
     sequence(:name) { |n| "First Second #{n}" }
     sequence(:phone, &:to_s)
   end

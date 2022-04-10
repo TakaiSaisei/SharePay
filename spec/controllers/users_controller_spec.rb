@@ -2,27 +2,15 @@ require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
   describe '#index' do
-    context 'without users' do
-      it 'returns 200' do
-        get :index
-        expect(response).to have_http_status :ok
-      end
-    end
-
-    context 'with users' do
-      let_it_be(:users) { create_list(:user, 3) }
-
-      it 'returns users' do
-        get :index
-        expect(response).to have_http_status :ok
-        expect(JSON.parse(response.body).count).to eq 3
-      end
+    it 'returns 200' do
+      get :index
+      expect(response).to have_http_status :ok
     end
   end
 
   describe '#show' do
     context 'with user' do
-      let_it_be(:user) { create(:user) }
+      let(:user) { create(:user) }
 
       it 'returns user' do
         get :show, params: { id: user.id }
@@ -40,9 +28,9 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe '#create' do
-    let_it_be(:user_attributes) { attributes_for(:user) }
-
     context 'with processable params' do
+      let(:user_attributes) { attributes_for(:user) }
+
       it 'creates user' do
         expect do
           post :create, params: { user: user_attributes }
@@ -65,10 +53,10 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe '#update' do
-    let!(:user) { create :user }
+    let(:user) { create :user }
 
     context 'with processable params' do
-      let_it_be(:user_attributes) { attributes_for(:user) }
+      let(:user_attributes) { attributes_for(:user) }
 
       it 'updates user' do
         expect do

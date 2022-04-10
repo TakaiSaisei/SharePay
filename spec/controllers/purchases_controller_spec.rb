@@ -2,27 +2,15 @@ require 'rails_helper'
 
 RSpec.describe PurchasesController, type: :controller do
   describe '#index' do
-    context 'without purchases' do
-      it 'returns 200' do
-        get :index
-        expect(response).to have_http_status :ok
-      end
-    end
-
-    context 'with purchases' do
-      let!(:purchases) { create_list(:purchase, 3) }
-
-      it 'returns purchases' do
-        get :index
-        expect(response).to have_http_status :ok
-        expect(JSON.parse(response.body).count).to eq 3
-      end
+    it 'returns 200' do
+      get :index
+      expect(response).to have_http_status :ok
     end
   end
 
   describe '#show' do
     context 'with purchase' do
-      let_it_be(:purchase) { create(:purchase) }
+      let(:purchase) { create(:purchase) }
 
       it 'returns purchase' do
         get :show, params: { id: purchase.id }
@@ -40,13 +28,15 @@ RSpec.describe PurchasesController, type: :controller do
   end
 
   describe '#create' do
-    let_it_be(:purchase_attributes) { nested_attributes_for(:purchase) }
-
     context 'with processable params' do
-      it 'creates purchase' do
+      let(:user) { create :user }
+      let(:purchase_attributes) { attributes_for(:purchase).merge(user_id: user.id) }
+      let(:user_purchase) { attributes_for(:user_purchase).merge(user_id: user.id) }
+
+      it 'creates purchase and user purchases' do
         expect do
-          post :create, params: { purchase: purchase_attributes }
-        end.to change { Purchase.count }.by(1)
+          post :create, params: { purchase: purchase_attributes.merge({ user_purchases_attributes: [user_purchase] }) }
+        end.to change { Purchase.count }.by(1).and change { UserPurchase.count }.by(1)
 
         expect(response).to have_http_status :created
         expect(JSON.parse(response.body, symbolize_names: true)).to include purchase_attributes
@@ -65,10 +55,10 @@ RSpec.describe PurchasesController, type: :controller do
   end
 
   describe '#update' do
-    let!(:purchase) { create :purchase }
+    let(:purchase) { create :purchase }
 
     context 'with processable params' do
-      let_it_be(:purchase_attributes) { attributes_for(:purchase) }
+      let(:purchase_attributes) { attributes_for(:purchase) }
 
       it 'updates purchase' do
         expect do
@@ -97,7 +87,7 @@ RSpec.describe PurchasesController, type: :controller do
 
     it 'destroys purchase' do
       expect do
-        delete :destroy, params: { id: purchase }
+        delete :destroy, params: { id: purchase.id }
       end.to change { Purchase.count }.by(-1)
 
       expect(response).to have_http_status :no_content

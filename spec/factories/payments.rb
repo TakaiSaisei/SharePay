@@ -19,7 +19,7 @@ FactoryBot.define do
   factory :payment do
     sequence(:amount) { |n| 1000.to_f + n }
     currency { 'RUB' }
-    association :receiver, factory: :user
-    association :sender, factory: :user
+    receiver
+    sender
   end
 end

@@ -16,8 +16,8 @@
 #  fk_rails_...  (sender_id => users.id)
 #
 class Payment < ApplicationRecord
-  belongs_to :sender, class_name: 'User'
   belongs_to :receiver, class_name: 'User'
+  belongs_to :sender, class_name: 'User'
 
   validates :amount, presence: true
   validates :currency, presence: true
