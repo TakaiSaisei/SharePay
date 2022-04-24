@@ -30,10 +30,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def purchases
-    @user.purchases
-  end
-
   private
 
   def set_user

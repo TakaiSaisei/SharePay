@@ -23,4 +23,8 @@ class Payment < ApplicationRecord
   validates :currency, presence: true
   validates :receiver_id, presence: true
   validates :sender_id, presence: true
+
+  def as_json(options = nil)
+    super.merge('receiver_phone' => User.find(receiver_id).phone, 'sender_phone' => User.find(sender_id).phone)
+  end
 end

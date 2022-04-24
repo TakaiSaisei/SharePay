@@ -3,7 +3,7 @@ class PurchasesController < ApplicationController
 
   # GET /purchases
   def index
-    @purchases = Purchase.all
+    @purchases = current_user.purchases
     render json: @purchases, status: :ok
   end
 
@@ -22,24 +22,6 @@ class PurchasesController < ApplicationController
     end
   end
 
-  # PUT /purchases/{id}
-  def update
-    if @purchase.update(purchase_params)
-      render status: :no_content
-    else
-      render json: { errors: @purchase.errors.full_messages }, status: :unprocessable_entity
-    end
-  end
-
-  # DELETE /purchases/{id}
-  def destroy
-    if @purchase.destroy
-      render status: :no_content
-    else
-      render json: { errors: @purchase.errors.full_messages }, status: :unprocessable_entity
-    end
-  end
-
   private
 
   def set_purchase
@@ -49,7 +31,11 @@ class PurchasesController < ApplicationController
   end
 
   def purchase_params
-    params.require(:purchase).permit(:description, :emoji, :name, :user_id,
-                                     user_purchases_attributes: %i[id user_id amount])
+    params[:purchase][:user_purchases_attributes].each do |attrs|
+      attrs[:user_phone].present? ? attrs[:user_id] = User.find_by(phone: attrs[:user_phone]).id : next
+    end
+
+    params.require(:purchase).permit(:description, :emoji, :name, :purchased_at, user_purchases_attributes: %i[id user_id amount])
+          .with_defaults(user_id: current_user.id)
   end
 end

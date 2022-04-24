@@ -2,13 +2,14 @@
 #
 # Table name: purchases
 #
-#  id          :bigint           not null, primary key
-#  description :string
-#  emoji       :string
-#  name        :string           not null
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  user_id     :bigint
+#  id           :bigint           not null, primary key
+#  description  :string
+#  emoji        :string
+#  name         :string           not null
+#  purchased_at :datetime
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  user_id      :bigint
 #
 # Foreign Keys
 #
@@ -23,4 +24,8 @@ class Purchase < ApplicationRecord
   validates :user_id, presence: true
 
   accepts_nested_attributes_for :user_purchases
+
+  def as_json(options = nil)
+    super.merge('user_purchases' => user_purchases.as_json)
+  end
 end

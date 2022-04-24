@@ -22,4 +22,8 @@
 class UserPurchase < ApplicationRecord
   belongs_to :purchase
   belongs_to :user
+
+  def as_json(options = nil)
+    super.merge('user_phone' => User.find(user_id).phone)
+  end
 end

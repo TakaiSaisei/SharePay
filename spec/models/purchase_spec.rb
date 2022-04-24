@@ -2,13 +2,14 @@
 #
 # Table name: purchases
 #
-#  id          :bigint           not null, primary key
-#  description :string
-#  emoji       :string
-#  name        :string           not null
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  user_id     :bigint
+#  id           :bigint           not null, primary key
+#  description  :string
+#  emoji        :string
+#  name         :string           not null
+#  purchased_at :datetime
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  user_id      :bigint
 #
 # Foreign Keys
 #

@@ -1,9 +1,7 @@
 Rails.application.routes.draw do
-  resources :payments
-  resources :purchases
-  resources :users, except: %i[create] do
-    get :purchases
-  end
+  resources :payments, except: %i[update destroy]
+  resources :purchases, except: %i[update destroy]
+  resources :users, except: %i[create]
 
   namespace :auth do
     post :login

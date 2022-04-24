@@ -3,7 +3,7 @@ class PaymentsController < ApplicationController
 
   # GET /payments
   def index
-    @payments = Payment.all
+    @payments = current_user.payments
     render json: @payments, status: :ok
   end
 
@@ -22,24 +22,6 @@ class PaymentsController < ApplicationController
     end
   end
 
-  # PUT /payments/{id}
-  def update
-    if @payment.update(payment_params)
-      render status: :no_content
-    else
-      render json: { errors: @payment.errors.full_messages }, status: :unprocessable_entity
-    end
-  end
-
-  # DELETE /payments/{id}
-  def destroy
-    if @payment.destroy
-      render status: :no_content
-    else
-      render json: { errors: @payment.errors.full_messages }, status: :unprocessable_entity
-    end
-  end
-
   private
 
   def set_payment
@@ -49,6 +31,6 @@ class PaymentsController < ApplicationController
   end
 
   def payment_params
-    params.require(:payment).permit(:amount, :currency, :receiver_id, :sender_id)
+    params.require(:payment).permit(:amount, :currency, :receiver_id).with_defaults(sender_id: current_user.id)
   end
 end

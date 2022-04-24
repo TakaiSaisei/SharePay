@@ -31,8 +31,8 @@ RSpec.describe PurchasesController, type: :controller do
 
   describe '#create' do
     context 'with processable params' do
-      let(:purchase_attributes) { attributes_for(:purchase).merge(user_id: user.id) }
-      let(:user_purchase) { attributes_for(:user_purchase).merge(user_id: user.id) }
+      let(:purchase_attributes) { attributes_for(:purchase) }
+      let(:user_purchase) { attributes_for(:user_purchase).merge(user_phone: user.phone) }
 
       it 'creates purchase and user purchases' do
         expect do
@@ -42,56 +42,6 @@ RSpec.describe PurchasesController, type: :controller do
         expect(response).to have_http_status :created
         expect(JSON.parse(response.body, symbolize_names: true)).to include purchase_attributes
       end
-    end
-
-    context 'with unprocessable params' do
-      it 'returns 422' do
-        expect do
-          post :create, params: { purchase: { name: 'name' } }
-        end.not_to change { Purchase.count }
-
-        expect(response).to have_http_status :unprocessable_entity
-      end
-    end
-  end
-
-  describe '#update' do
-    let(:purchase) { create(:purchase) }
-
-    context 'with processable params' do
-      let(:purchase_attributes) { attributes_for(:purchase) }
-
-      it 'updates purchase' do
-        expect do
-          put :update, params: { id: purchase.id, purchase: purchase_attributes }
-          purchase.reload
-        end.to change { purchase.name }.to purchase_attributes[:name]
-
-        expect(response).to have_http_status :no_content
-      end
-    end
-
-    context 'with unprocessable params' do
-      it 'returns 422' do
-        expect do
-          put :update, params: { id: purchase.id, purchase: { name: nil } }
-          purchase.reload
-        end.not_to change { purchase.name }
-
-        expect(response).to have_http_status :unprocessable_entity
-      end
-    end
-  end
-
-  describe '#destroy' do
-    let!(:purchase) { create(:purchase) }
-
-    it 'destroys purchase' do
-      expect do
-        delete :destroy, params: { id: purchase.id }
-      end.to change { Purchase.count }.by(-1)
-
-      expect(response).to have_http_status :no_content
     end
   end
 end
