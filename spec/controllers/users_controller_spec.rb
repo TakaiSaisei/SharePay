@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
+  include_context 'authenticated_user'
+
   describe '#index' do
     it 'returns 200' do
       get :index
@@ -27,33 +29,8 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
-  describe '#create' do
-    context 'with processable params' do
-      let(:user_attributes) { attributes_for(:user) }
-
-      it 'creates user' do
-        expect do
-          post :create, params: { user: user_attributes }
-        end.to change { User.count }.by(1)
-
-        expect(response).to have_http_status :created
-        expect(JSON.parse(response.body, symbolize_names: true)).to include user_attributes
-      end
-    end
-
-    context 'with unprocessable params' do
-      it 'returns 422' do
-        expect do
-          post :create, params: { user: { name: 'name' } }
-        end.not_to change { User.count }
-
-        expect(response).to have_http_status :unprocessable_entity
-      end
-    end
-  end
-
   describe '#update' do
-    let(:user) { create :user }
+    let(:user) { create(:user) }
 
     context 'with processable params' do
       let(:user_attributes) { attributes_for(:user) }
@@ -71,9 +48,9 @@ RSpec.describe UsersController, type: :controller do
     context 'with unprocessable params' do
       it 'returns 422' do
         expect do
-          put :update, params: { id: user.id, user: { name: nil } }
+          put :update, params: { id: user.id, user: { phone: nil } }
           user.reload
-        end.not_to change { user.name }
+        end.not_to change { user.phone }
 
         expect(response).to have_http_status :unprocessable_entity
       end
@@ -81,7 +58,7 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe '#destroy' do
-    let!(:user) { create :user }
+    let!(:user) { create(:user) }
 
     it 'destroys user' do
       expect do

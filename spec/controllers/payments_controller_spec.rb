@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe PaymentsController, type: :controller do
+  include_context 'authenticated_user'
+
   describe '#index' do
     it 'returns 200' do
       get :index
@@ -55,7 +57,7 @@ RSpec.describe PaymentsController, type: :controller do
   end
 
   describe '#update' do
-    let(:payment) { create :payment }
+    let(:payment) { create(:payment) }
 
     context 'with processable params' do
       let(:payment_attributes) { attributes_for(:payment) }
@@ -83,7 +85,7 @@ RSpec.describe PaymentsController, type: :controller do
   end
 
   describe '#destroy' do
-    let!(:payment) { create :payment }
+    let!(:payment) { create(:payment) }
 
     it 'destroys payment' do
       expect do

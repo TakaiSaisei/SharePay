@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe PurchasesController, type: :controller do
+  include_context 'authenticated_user'
+
   describe '#index' do
     it 'returns 200' do
       get :index
@@ -29,7 +31,6 @@ RSpec.describe PurchasesController, type: :controller do
 
   describe '#create' do
     context 'with processable params' do
-      let(:user) { create :user }
       let(:purchase_attributes) { attributes_for(:purchase).merge(user_id: user.id) }
       let(:user_purchase) { attributes_for(:user_purchase).merge(user_id: user.id) }
 
@@ -55,7 +56,7 @@ RSpec.describe PurchasesController, type: :controller do
   end
 
   describe '#update' do
-    let(:purchase) { create :purchase }
+    let(:purchase) { create(:purchase) }
 
     context 'with processable params' do
       let(:purchase_attributes) { attributes_for(:purchase) }
@@ -83,7 +84,7 @@ RSpec.describe PurchasesController, type: :controller do
   end
 
   describe '#destroy' do
-    let!(:purchase) { create :purchase }
+    let!(:purchase) { create(:purchase) }
 
     it 'destroys purchase' do
       expect do

@@ -7,6 +7,7 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 require 'rspec/rails'
 require 'test_prof/recipes/rspec/let_it_be'
 require 'test_prof/factory_default'
+require 'test_prof/recipes/rspec/any_fixture'
 TestProf::FactoryDefault.init
 require_relative 'support/factory_bot'
 require_relative 'support/factory_default'
@@ -25,6 +26,7 @@ require_relative 'support/factory_default'
 # require only the support files necessary.
 #
 # Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove these lines.
