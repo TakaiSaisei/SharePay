@@ -25,10 +25,6 @@ class UserPurchase < ApplicationRecord
 
   after_create :update_debt
 
-  def as_json(options = nil)
-    super.merge('user_phone' => User.find(user_id).phone)
-  end
-
   private
 
   def update_debt

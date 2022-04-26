@@ -4,19 +4,16 @@ class PurchasesController < ApplicationController
   # GET /purchases
   def index
     @purchases = current_user.purchases
-    render json: @purchases, status: :ok
   end
 
   # GET /purchases/{id}
-  def show
-    render json: @purchase, status: :ok
-  end
+  def show; end
 
   # POST /purchases
   def create
     @purchase = Purchase.new(purchase_params)
     if @purchase.save
-      render json: @purchase, status: :created
+      @purchase
     else
       render json: { errors: @purchase.errors.full_messages }, status: :unprocessable_entity
     end
@@ -35,7 +32,8 @@ class PurchasesController < ApplicationController
       attrs[:user_phone].present? ? attrs[:user_id] = User.find_by(phone: attrs[:user_phone]).id : next
     end
 
-    params.require(:purchase).permit(:description, :emoji, :name, :purchased_at, user_purchases_attributes: %i[id user_id amount])
+    params.require(:purchase).permit(:description, :emoji, :name, :purchased_at, :currency,
+                                     user_purchases_attributes: %i[id user_id amount])
           .with_defaults(user_id: current_user.id)
   end
 end

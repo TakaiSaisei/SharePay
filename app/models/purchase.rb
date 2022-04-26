@@ -27,8 +27,4 @@ class Purchase < ApplicationRecord
   validates :user_id, presence: true
 
   accepts_nested_attributes_for :user_purchases
-
-  def as_json(options = nil)
-    super.merge('user_purchases' => user_purchases.as_json)
-  end
 end
