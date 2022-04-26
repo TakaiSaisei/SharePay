@@ -4,6 +4,7 @@ module Authenticable
   included do
     include JsonWebToken
     before_action :authenticate_user
+    helper_method :current_user
   end
 
   private
