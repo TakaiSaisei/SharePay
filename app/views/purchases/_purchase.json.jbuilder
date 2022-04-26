@@ -4,8 +4,8 @@ json.id purchase.id
 json.name purchase.name
 json.description purchase.description
 json.emoji purchase.emoji
-json.purchased_at purchase.purchased_at
 json.currency purchase.currency
+json.created_at purchase.purchased_at
 
 if with_user_purchases
   json.user_purchases purchase.user_purchases do |user_purchase|

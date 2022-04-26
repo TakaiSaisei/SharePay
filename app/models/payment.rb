@@ -28,10 +28,6 @@ class Payment < ApplicationRecord
 
   after_create :update_debt
 
-  def as_json(options = nil)
-    super.merge('receiver_phone' => User.find(receiver_id).phone, 'sender_phone' => User.find(sender_id).phone)
-  end
-
   private
 
   def update_debt
