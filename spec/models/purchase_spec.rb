@@ -3,6 +3,7 @@
 # Table name: purchases
 #
 #  id           :bigint           not null, primary key
+#  currency     :integer
 #  description  :string
 #  emoji        :string
 #  name         :string           not null

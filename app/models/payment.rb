@@ -16,6 +16,8 @@
 #  fk_rails_...  (sender_id => users.id)
 #
 class Payment < ApplicationRecord
+  include HasCurrency
+
   belongs_to :receiver, class_name: 'User'
   belongs_to :sender, class_name: 'User'
 

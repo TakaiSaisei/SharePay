@@ -3,6 +3,7 @@
 # Table name: purchases
 #
 #  id           :bigint           not null, primary key
+#  currency     :integer
 #  description  :string
 #  emoji        :string
 #  name         :string           not null
@@ -16,6 +17,8 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Purchase < ApplicationRecord
+  include HasCurrency
+
   belongs_to :user
   has_many :user_purchases
   has_many :users, through: :user_purchases
