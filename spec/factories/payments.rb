@@ -4,7 +4,7 @@
 #
 #  id          :bigint           not null, primary key
 #  amount      :float
-#  currency    :string           not null
+#  currency    :integer
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  receiver_id :bigint
@@ -18,7 +18,7 @@
 FactoryBot.define do
   factory :payment do
     sequence(:amount) { |n| 1000.to_f + n }
-    currency { 'RUB' }
+    currency { 'rub' }
     receiver
     sender
   end

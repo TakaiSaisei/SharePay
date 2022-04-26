@@ -19,6 +19,7 @@
 FactoryBot.define do
   factory :purchase do
     sequence(:name) { |n| "Purchase #{n}" }
+    currency { 'rub' }
     association :user
   end
 end

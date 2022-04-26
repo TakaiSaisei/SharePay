@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe PurchasesController, type: :controller do
   include_context 'authenticated_user'
+  render_views
 
   describe '#index' do
     it 'returns 200' do
@@ -17,7 +18,6 @@ RSpec.describe PurchasesController, type: :controller do
       it 'returns purchase' do
         get :show, params: { id: purchase.id }
         expect(response).to have_http_status :ok
-        expect(response.body).to eq purchase.to_json
       end
     end
 

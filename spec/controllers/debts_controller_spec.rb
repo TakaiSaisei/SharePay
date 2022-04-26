@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe DebtsController, type: :controller do
   include_context 'authenticated_user'
+  render_views
 
   describe '#index' do
     it 'returns 200' do

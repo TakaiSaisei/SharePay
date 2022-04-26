@@ -15,7 +15,7 @@ class UsersController < ApplicationController
   # PUT /users/{id}
   def update
     if @user.update(user_params)
-      render status: :no_content
+      head :no_content
     else
       render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
     end
@@ -24,7 +24,7 @@ class UsersController < ApplicationController
   # DELETE /users/{id}
   def destroy
     if @user.destroy
-      render status: :no_content
+      head :no_content
     else
       render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
     end

@@ -23,10 +23,10 @@ class AuthController < ApplicationController
 
   def validate_sms_code
     if (code = auth_params[:sms_code])
-      code.eql?(1234) ? return : render(status: :conflict)
+      code.eql?('1234') ? return : head(:conflict)
     else
       # send sms code
-      render status: :see_other
+      head :see_other
     end
   end
 end

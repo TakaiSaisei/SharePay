@@ -2,30 +2,12 @@ require 'rails_helper'
 
 RSpec.describe PaymentsController, type: :controller do
   include_context 'authenticated_user'
+  render_views
 
   describe '#index' do
     it 'returns 200' do
       get :index
       expect(response).to have_http_status :ok
-    end
-  end
-
-  describe '#show' do
-    context 'with payment' do
-      let(:payment) { create(:payment) }
-
-      it 'returns payment' do
-        get :show, params: { id: payment.id }
-        expect(response).to have_http_status :ok
-        expect(response.body).to eq payment.to_json
-      end
-    end
-
-    context 'without payment' do
-      it 'returns 404' do
-        get :show, params: { id: 0 }
-        expect(response).to have_http_status :not_found
-      end
     end
   end
 

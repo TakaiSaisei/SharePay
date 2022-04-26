@@ -13,7 +13,7 @@ class PurchasesController < ApplicationController
   def create
     @purchase = Purchase.new(purchase_params)
     if @purchase.save
-      @purchase
+      render @purchase, status: :created
     else
       render json: { errors: @purchase.errors.full_messages }, status: :unprocessable_entity
     end
