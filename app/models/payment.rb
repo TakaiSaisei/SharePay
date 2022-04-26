@@ -26,7 +26,15 @@ class Payment < ApplicationRecord
   validates :receiver_id, presence: true
   validates :sender_id, presence: true
 
+  after_create :update_debt
+
   def as_json(options = nil)
     super.merge('receiver_phone' => User.find(receiver_id).phone, 'sender_phone' => User.find(sender_id).phone)
+  end
+
+  private
+
+  def update_debt
+    DebtService.decrease(debtor_id: sender_id, creditor_id: receiver_id, amount:)
   end
 end
