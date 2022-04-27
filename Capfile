@@ -16,8 +16,9 @@ require 'capistrano/scm/git'
 install_plugin Capistrano::SCM::Git
 
 # Include tasks from other gems included in your Gemfile
-require 'capistrano/rails'
+require 'capistrano/bundler'
 require 'capistrano/passenger'
+require 'capistrano/rails/migrations'
 require 'capistrano/rbenv'
 
 set :rbenv_type, :user

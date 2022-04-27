@@ -2,13 +2,13 @@
 lock '~> 3.17.0'
 
 set :application, 'sharepay'
-set :repo_url, 'git@github.com:TakaiSaisei/sharepay.git'
+set :repo_url, 'https://github.com/TakaiSaisei/sharepay.git'
 
 # Default branch is :master
-# ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
+ask :branch, 'main'
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, "/home/shareapp/#{fetch :application}"
+set :deploy_to, "/home/sharepay/#{fetch :application}"
 
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
