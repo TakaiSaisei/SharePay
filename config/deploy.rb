@@ -21,7 +21,7 @@ set :deploy_to, "/home/sharepay/#{fetch :application}"
 # set :pty, true
 
 # Default value for :linked_files is []
-# append :linked_files, "config/database.yml", 'config/master.key'
+append :linked_files, 'config/master.key'
 
 # Default value for linked_dirs is []
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', '.bundle', 'public/system', 'public/uploads'
