@@ -23,10 +23,10 @@ class AuthController < ApplicationController
 
   def validate_sms_code
     if (code = auth_params[:sms_code])
-      code.eql?('1234') ? return : head(:conflict)
+      code.eql?('1234') ? return : render(json: { success: false, error: 'Invalid SMS code' }, status: :conflict)
     else
       # send sms code
-      head :see_other
+      render(json: { success: true }, status: :ok)
     end
   end
 end

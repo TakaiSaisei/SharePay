@@ -7,7 +7,7 @@ RSpec.describe AuthController, type: :controller do
     context 'without sms code' do
       it 'sends code' do
         post :login, params: { auth: { phone: user.phone } }
-        expect(response).to have_http_status :see_other
+        expect(response).to have_http_status :ok
       end
     end
 

@@ -10,7 +10,11 @@ module Authenticable
   private
 
   def authenticate_user
-    render status: :unauthorized unless (token = decoded_token) && (@current_user = User.find_by(id: token['user_id']))
+    render status: :unauthorized unless authorized?
+  end
+
+  def authorized?
+    (token = decoded_token) && (@current_user = User.find_by(id: token['user_id']))
   end
 
   def current_user
