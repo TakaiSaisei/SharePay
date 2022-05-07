@@ -28,6 +28,15 @@ class Purchase < ApplicationRecord
   validates :user_id, presence: true
 
   after_update :update_all_debts, if: :saved_change_to_draft?
+  before_update do
+    check_draft
+    throw(:abort) if errors.present?
+  end
+
+  before_destroy do
+    check_draft
+    throw(:abort) if errors.present?
+  end
 
   accepts_nested_attributes_for :user_purchases
 
@@ -37,5 +46,11 @@ class Purchase < ApplicationRecord
     return unless draft == false
 
     user_purchases.each(&:touch)
+  end
+
+  def check_draft
+    return if will_save_change_to_draft?(from: true, to: false)
+
+    errors.add(:base, 'Cannot delete or update non-draft purchase') if draft == false
   end
 end

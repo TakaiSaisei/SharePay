@@ -11,9 +11,29 @@ class PurchasesController < ApplicationController
 
   # POST /purchases
   def create
-    @purchase = Purchase.new(purchase_params)
+    @purchase = Purchase.new(purchase_params.with_defaults(user_id: current_user.id))
     if @purchase.save
       render @purchase, status: :created
+    else
+      render json: { errors: @purchase.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  # PATCH /purchases
+  def update
+    @purchase.user_purchases.destroy_all
+
+    if @purchase.update(purchase_params)
+      render @purchase, status: :ok
+    else
+      render json: { errors: @purchase.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  # DELETE /purchases
+  def destroy
+    if @purchase.destroy
+      render json: { success: true }, status: :ok
     else
       render json: { errors: @purchase.errors.full_messages }, status: :unprocessable_entity
     end
@@ -28,12 +48,17 @@ class PurchasesController < ApplicationController
   end
 
   def purchase_params
+    user_purchases_params
+
+    params.require(:purchase).permit(:description, :emoji, :name, :purchased_at, :currency,
+                                     user_purchases_attributes: %i[user_id amount])
+  end
+
+  def user_purchases_params
+    return unless params[:purchase][:user_purchases_attributes].present?
+
     params[:purchase][:user_purchases_attributes].each do |attrs|
       attrs[:user_phone].present? ? attrs[:user_id] = User.find_by(phone: attrs[:user_phone]).id : next
     end
-
-    params.require(:purchase).permit(:description, :emoji, :name, :purchased_at, :currency,
-                                     user_purchases_attributes: %i[id user_id amount])
-          .with_defaults(user_id: current_user.id)
   end
 end

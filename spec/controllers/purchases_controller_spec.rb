@@ -44,4 +44,47 @@ RSpec.describe PurchasesController, type: :controller do
       end
     end
   end
+
+  describe '#update' do
+    context 'when purchase is draft' do
+      let!(:purchase) { create(:purchase, :with_user_purchases, draft: true) }
+      let(:user_purchases_attributes) { [{ user_phone: purchase.user_purchases.first.user.phone, amount: 100 }] }
+      let(:purchase_attributes) { attributes_for(:purchase).merge({user_purchases_attributes: user_purchases_attributes}) }
+
+      it 'updates purchase' do
+        patch :update, params: { id: purchase.id, purchase: purchase_attributes }
+        expect(response).to have_http_status :ok
+      end
+    end
+
+    context 'when purchase is not draft' do
+      let!(:purchase) { create(:purchase) }
+      let(:purchase_attributes) { attributes_for(:purchase) }
+
+      it 'returns error' do
+        patch :update, params: { id: purchase.id, purchase: purchase_attributes }
+        expect(response).to have_http_status :unprocessable_entity
+      end
+    end
+  end
+
+  describe '#destroy' do
+    context 'when purchase is draft' do
+      let!(:purchase) { create(:purchase, draft: true) }
+
+      it 'destroys purchase' do
+        delete :destroy, params: { id: purchase.id }
+        expect(response).to have_http_status :ok
+      end
+    end
+
+    context 'when purchase is not draft' do
+      let!(:purchase) { create(:purchase) }
+
+      it 'returns error' do
+        delete :destroy, params: { id: purchase.id }
+        expect(response).to have_http_status :unprocessable_entity
+      end
+    end
+  end
 end
