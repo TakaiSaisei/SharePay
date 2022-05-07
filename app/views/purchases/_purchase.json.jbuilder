@@ -5,6 +5,7 @@ json.name purchase.name
 json.description purchase.description
 json.emoji purchase.emoji
 json.currency purchase.currency
+json.draft purchase.draft
 json.created_at purchase.purchased_at
 
 if with_user_purchases
