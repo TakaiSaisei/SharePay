@@ -52,7 +52,7 @@ class PurchasesController < ApplicationController
 
     params[:purchased_at] = params[:created_at] if params[:created_at].present?
 
-    params.permit(:description, :emoji, :name, :purchased_at, :currency,
+    params.permit(:description, :emoji, :name, :purchased_at, :currency, :draft,
                                      user_purchases_attributes: %i[user_id amount])
   end
 
