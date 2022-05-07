@@ -36,7 +36,7 @@ RSpec.describe PurchasesController, type: :controller do
 
       it 'creates purchase and user purchases' do
         expect do
-          post :create, params: { purchase: purchase_attributes.merge({ user_purchases_attributes: [user_purchase] }) }
+          post :create, params: purchase_attributes.merge({ user_purchases_attributes: [user_purchase] })
         end.to change { Purchase.count }.by(1).and change { UserPurchase.count }.by(1)
 
         expect(response).to have_http_status :created

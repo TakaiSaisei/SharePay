@@ -19,7 +19,7 @@ RSpec.describe PaymentsController, type: :controller do
 
       it 'creates payment' do
         expect do
-          post :create, params: { payment: payment_attributes }
+          post :create, params: payment_attributes
         end.to change { Payment.count }.by(1)
 
         expect(response).to have_http_status :created

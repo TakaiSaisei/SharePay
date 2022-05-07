@@ -18,7 +18,7 @@ class AuthController < ApplicationController
   private
 
   def auth_params
-    params.require(:auth).permit(:phone, :sms_code)
+    params.permit(:phone, :sms_code)
   end
 
   def validate_sms_code

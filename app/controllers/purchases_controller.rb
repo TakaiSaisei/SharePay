@@ -50,14 +50,14 @@ class PurchasesController < ApplicationController
   def purchase_params
     user_purchases_params
 
-    params.require(:purchase).permit(:description, :emoji, :name, :purchased_at, :currency,
+    params.permit(:description, :emoji, :name, :purchased_at, :currency,
                                      user_purchases_attributes: %i[user_id amount])
   end
 
   def user_purchases_params
-    return unless params[:purchase][:user_purchases_attributes].present?
+    return unless params[:user_purchases_attributes].present?
 
-    params[:purchase][:user_purchases_attributes].each do |attrs|
+    params[:user_purchases_attributes].each do |attrs|
       attrs[:user_phone].present? ? attrs[:user_id] = User.find_by(phone: attrs[:user_phone]).id : next
     end
   end
