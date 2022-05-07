@@ -50,6 +50,8 @@ class PurchasesController < ApplicationController
   def purchase_params
     user_purchases_params
 
+    params[:purchased_at] = params[:created_at] if params[:created_at].present?
+
     params.permit(:description, :emoji, :name, :purchased_at, :currency,
                                      user_purchases_attributes: %i[user_id amount])
   end
