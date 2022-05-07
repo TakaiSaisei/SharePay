@@ -22,7 +22,7 @@ class Purchase < ApplicationRecord
 
   belongs_to :user
   has_many :user_purchases
-  has_many :users, through: :user_purchases
+  has_many :users, through: :user_purchases, dependent: :destroy
 
   validates :name, presence: true
   validates :user_id, presence: true
