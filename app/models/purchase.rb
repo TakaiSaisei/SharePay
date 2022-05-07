@@ -33,6 +33,8 @@ class Purchase < ApplicationRecord
     throw(:abort) if errors.present?
   end
 
+  before_create :set_fields
+
   before_destroy do
     check_draft
     throw(:abort) if errors.present?
@@ -52,5 +54,9 @@ class Purchase < ApplicationRecord
     return if will_save_change_to_draft?(from: true, to: false)
 
     errors.add(:base, 'Cannot delete or update non-draft purchase') if draft == false
+  end
+
+  def set_fields
+    self.purchased_at ||= Time.current
   end
 end
