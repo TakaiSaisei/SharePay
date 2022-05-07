@@ -5,6 +5,7 @@
 #  id           :bigint           not null, primary key
 #  currency     :integer
 #  description  :string
+#  draft        :boolean          default(FALSE), not null
 #  emoji        :string
 #  name         :string           not null
 #  purchased_at :datetime
@@ -21,5 +22,12 @@ FactoryBot.define do
     sequence(:name) { |n| "Purchase #{n}" }
     currency { 'rub' }
     association :user
+
+    trait :with_user_purchases do
+      after(:create) do |purchase, _evaluator|
+        user = create(:user)
+        create(:user_purchase, purchase:, user:)
+      end
+    end
   end
 end

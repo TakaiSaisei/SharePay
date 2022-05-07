@@ -23,7 +23,8 @@ class UserPurchase < ApplicationRecord
   belongs_to :purchase
   belongs_to :user
 
-  after_create :update_debt
+  after_create :update_debt, if: -> { purchase.draft == false }
+  after_touch :update_debt
 
   private
 
