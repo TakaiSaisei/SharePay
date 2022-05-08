@@ -60,7 +60,7 @@ class PurchasesController < ApplicationController
     return unless params[:user_purchases_attributes].present?
 
     params[:user_purchases_attributes].each do |attrs|
-      attrs[:user_phone].present? ? attrs[:user_id] = User.find_by(phone: attrs[:user_phone]).id : next
+      attrs[:user_phone].present? ? attrs[:user_id] = User.find_or_create_by(phone: attrs[:user_phone]).id : next
     end
   end
 end
