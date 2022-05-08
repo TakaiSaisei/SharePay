@@ -10,7 +10,7 @@ if with_events
     json.array! debt.events do |event|
       json.amount current_user.id == event.user_lost_id ? -event.amount : event.amount
       json.date event.date
-      json.description event.description
+      json.name event.name
       json.emoji event.emoji
       json.type event.type
       json.event_id event.event_id
