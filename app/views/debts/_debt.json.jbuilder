@@ -13,6 +13,7 @@ if with_events
       json.description event.description
       json.emoji event.emoji
       json.type event.type
+      json.event_id event.event_id
     end
   end
 end
