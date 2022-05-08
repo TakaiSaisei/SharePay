@@ -23,8 +23,8 @@ class UserPurchase < ApplicationRecord
   belongs_to :purchase
   belongs_to :user
 
-  after_create :update_debt, if: -> { purchase.draft == false }
-  after_touch :update_debt
+  after_create :update_debt, if: -> { purchase.draft == false && user_id != purchase.user_id }
+  after_touch :update_debt, if: -> { user_id != purchase.user_id }
 
   private
 
