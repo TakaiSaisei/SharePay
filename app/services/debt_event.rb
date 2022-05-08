@@ -2,7 +2,8 @@ class DebtEvent
   class << self
     def all(debt)
       account_scope = [debt.creditor_id, debt.debtor_id]
-      events = UserPurchase.where(user_id: account_scope) | Payment.where(sender_id: account_scope, receiver_id: account_scope)
+      events = UserPurchase.includes(:purchase).where(user_id: account_scope).where(purchases: { draft: false }) |
+               Payment.where(sender_id: account_scope, receiver_id: account_scope)
 
       events.each_with_object([]) do |event, ary|
         case event
