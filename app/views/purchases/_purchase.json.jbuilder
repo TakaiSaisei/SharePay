@@ -2,6 +2,7 @@ with_user_purchases = false unless defined?(:with_user_purchases)
 
 json.id purchase.id
 json.name purchase.name
+json.amount purchase.amount
 json.description purchase.description
 json.emoji purchase.emoji
 json.currency purchase.currency

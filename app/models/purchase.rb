@@ -42,6 +42,10 @@ class Purchase < ApplicationRecord
 
   accepts_nested_attributes_for :user_purchases
 
+  def amount
+    user_purchases.sum(:amount)
+  end
+
   private
 
   def update_all_debts
