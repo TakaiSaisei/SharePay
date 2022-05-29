@@ -3,7 +3,7 @@ class DebtsController < ApplicationController
 
   # GET /debts
   def index
-    @debts = current_user.mine_debts.where('amount != 0.0')
+    @debts = current_user.mine_debts.filter { |debt| debt.amount != 0 }
   end
 
   # GET /debts/{id}
