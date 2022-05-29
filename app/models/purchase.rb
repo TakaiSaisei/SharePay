@@ -27,7 +27,7 @@ class Purchase < ApplicationRecord
   validates :name, presence: true
   validates :user_id, presence: true
 
-  after_update :update_all_debts, if: :saved_change_to_draft?
+  after_update :update_all_debts, if: -> { saved_change_to_draft? && draft == false }
   before_update do
     check_draft
     throw(:abort) if errors.present?
@@ -49,8 +49,6 @@ class Purchase < ApplicationRecord
   private
 
   def update_all_debts
-    return unless draft == false
-
     user_purchases.each(&:touch)
   end
 

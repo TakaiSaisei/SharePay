@@ -21,6 +21,12 @@ class Debt < ApplicationRecord
   belongs_to :creditor, class_name: 'User', foreign_key: :creditor_id
   belongs_to :debtor, class_name: 'User', foreign_key: :debtor_id
 
+  def amount
+    events.sum do |event|
+      creditor_id == event.user_lost_id ? event.amount : -event.amount
+    end
+  end
+
   def events
     DebtEvent.all(self)
   end

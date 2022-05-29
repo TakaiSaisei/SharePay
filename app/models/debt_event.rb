@@ -2,13 +2,17 @@ class DebtEvent
   class << self
     def all(debt)
       account_scope = [debt.creditor_id, debt.debtor_id]
-      events = UserPurchase.includes(:purchase)
-                           .where(user_id: account_scope)
-                           .where(purchases: { draft: false })
-                           .where('purchases.user_id != user_purchases.user_id') |
-               Payment.where(sender_id: account_scope, receiver_id: account_scope)
+      events = []
 
-      events.each_with_object([]) do |event, ary|
+      account_scope.each do |acc|
+        events << (UserPurchase.includes(:purchase)
+                              .where(user_id: acc)
+                              .where(purchases: { draft: false, user_id: account_scope - [acc] })
+                              .where('purchases.user_id != user_purchases.user_id') |
+          Payment.where(sender_id: account_scope, receiver_id: account_scope))
+      end
+
+      events.flatten.uniq.each_with_object([]) do |event, ary|
         case event
         when UserPurchase
           ary << new(amount: event.amount, date: event.purchase.purchased_at, type: :purchase,
